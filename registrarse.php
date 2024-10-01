@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <title>Document</title>
+    <title>Pokedex</title>
 </head>
 <body>
 <header>
@@ -15,13 +14,9 @@
             <a href="index.php" class="flex items-center">
                 <img src="assets/Pokedex_logo.png" class="mr-3 h-6 h-9" alt="Flowbite Logo">
             </a>
-
         </div>
-
-
     </nav>
 </header>
-
 <div class="w-full mt-20 flex flex-wrap justify-center align-center">
     <h1 class="text-center w-full ">Registrarse</h1>
     <form action="registrarse.php" method="post">
@@ -36,43 +31,27 @@
                    class="mt-1 px-2 py-2 bg-blue-700 text-white hover:bg-blue-800  shadow-sm border-slate-300  block w-full rounded-md text-sm focus:ring-1"/>
     </form>
 </div>
-
-
 </body>
 </html>
-
 <?php
-
-if(!empty($_POST['registrarse'])){
+if (!empty($_POST['registrarse'])) {
     include_once 'conexion.php';
     include_once 'buscar.php';
-
     $conn = getConexion("pokemon");
-
     $usuario = $_POST['usuario'];
     $clave = $_POST['clave'];
-
     $existe = buscarUsuario($usuario);
-    if($existe == 0){
+    if ($existe == 0) {
         $sql = "INSERT INTO  usuario (nombre,  contrasenia ) VALUES (?,?)";
-
         $statement = $conn->prepare($sql);
-
-        $statement->bind_param("ss",$usuario , $clave);
-
-        if($statement->execute()){
+        $statement->bind_param("ss", $usuario, $clave);
+        if ($statement->execute()) {
             $conn->close();
             header("location: index.php");
             exit();
         }
-    }else{
+    } else {
         $conn->close();
         echo $existe;
     }
-
-
-
-
-
-
 }

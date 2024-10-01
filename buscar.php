@@ -6,22 +6,16 @@ function buscarPorNombreId($idnombre)
 {
     $conn = getConexion('pokemon');
     $sql = "SELECT * FROM pokemones where numero= ? OR nombre=? ";
-
     $statement = $conn->prepare($sql);
-
     $statement->bind_param("ss", $idnombre, $idnombre);
-
-
     $statement->execute();
     $resultado = $statement->get_result()->fetch_all(MYSQLI_ASSOC);
     $conn->close();
-
     if (empty($resultado)) {
         throw  new Exception("No se encontro el pokemon");
-    }else{
+    } else {
         return $resultado[0];
     }
-
 }
 
 function buscarTodos()
@@ -43,43 +37,30 @@ function buscarUsuario($nombre)
 {
     $conn = getConexion('pokemon');
     $sql = "SELECT * FROM usuario where nombre=? ";
-
     $statement = $conn->prepare($sql);
-
     $statement->bind_param("s", $nombre);
-
-
     $statement->execute();
     $resultado = $statement->get_result()->fetch_all(MYSQLI_ASSOC);
     $conn->close();
-
     if (empty($resultado)) {
         return 0;
-    }else{
+    } else {
         return "<p class='text-red-400 block w-full text-center'>Usuario existente</p>";
     }
-
 }
 
 function buscarUsuariocontrasenia($nombre, $contrasenia)
 {
     $conn = getConexion('pokemon');
     $sql = "SELECT * FROM usuario where nombre=? AND contrasenia=?";
-
     $statement = $conn->prepare($sql);
-
     $statement->bind_param("ss", $nombre, $contrasenia);
-
-
     $statement->execute();
     $resultado = $statement->get_result()->fetch_all(MYSQLI_ASSOC);
     $conn->close();
-
     if (empty($resultado)) {
         return 0;
-    }else{
+    } else {
         return "<p class='text-red-400 block w-full text-center'>Usuario existente</p>";
     }
-
 }
-

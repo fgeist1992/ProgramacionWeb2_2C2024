@@ -5,7 +5,6 @@ function getConexion($database): mysqli
     $username = 'root';
     $password = '';
     $database = $database;
-
     $conn = new mysqli($servername, $username, $password, $database);
     return $conn;
 }
